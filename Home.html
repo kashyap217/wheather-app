@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+    integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer" />
+    <style>
+        body{
+            display: flex;
+            justify-content:center ;
+            align-items: center;
+            flex-wrap: wrap;
+            height: 100vh;
+            width: 100vw;
+        }
+        /* html,body{
+            font-size: 62.5%;
+            height: 100%;
+        } */
+        .box{
+            width: 20vw;
+            height: 60vh;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.2rem 3rem rgba(0, 0, 0, 0.2);
+            background: #a5bbdd;
+            position: relative;
+            overflow: hidden;
+            transform: translate3d(0, 0, 0);
+            min-width: 20rem;
+            min-height: 31rem;
+        }
+
+        .info{
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 45%;
+            z-index: 5;
+            text-align: center;
+        }
+        .location{
+            margin-top: 1.5rem;
+            text-align: center;
+            font-weight: 800;
+            font-size: 3rem;
+        }
+        #weathercon{
+            height: 55%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 5rem;
+        }
+    </style>
+    <title>Wheather app</title>
+</head>
+<body>
+    <div class="box">
+     <div id="weathercon">
+     <i class="fas fa-sun", style="color: yellow;"></i></div>
+     <div class="info">
+         <h2 class="locatioin"><i class="fas fa-street-view"></i> {%location%}, {%countury%}</h2>
+         <p id="date">WED | MAY 12 | 11:00AM</p>
+         <h1 id="temp">{%tempval%}&deg;C</h1>
+         <h3 id="temp_max">Min {%tempmin%}&deg;C | Max {%tempmax%}&deg;C</h3>
+     </div>
+</div>
+<script>
+    const curdate= document.getElementById("date");
+    let wheathercon= document.getElementById("weathercon");
+    const tempstats= "{%tempstatus%}";
+    if(tempstats=="Clear"){
+        wheathercon.innerHTML= "<i class='fas fa-sun', style='color: yellow;'></i>"
+    }
+    else if(tempstats=="Clouds"){
+        wheathercon.innerHTML= "<i class='fas fa-cloud', style='color: white;'></i>"
+    }
+    else if(tempstats=="Rainy"){
+        wheathercon.innerHTML= "<i class='fas fa-cloud-showers;'></i></div>"
+    }
+    else{
+        wheathercon.innerHTML= "<i class='fas fa-cloud', style='color: white;'></i>"
+    };
+
+    const getcurrentday =() =>{
+        const days = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+        const currenttime = new Date();
+        let day = days[currenttime.getDay()];
+        return day;
+    }
+    const getcurrenttime =() =>{
+        const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+        const now = new Date();
+        let month= months[now.getMonth()];
+        let date= now.getDate();
+
+        let hours=now.getHours();
+        let min=now.getMinutes();
+        let periods= "AM";
+        if(hours >11){
+            periods="PM";
+            if(hours>12){ hours -= 12;} ;    //To shown the time after 12 as 1, 2, 3 ,4 etc
+        }
+        if(min <10){
+            min = "0"+min
+        }
+        return `${month}${date} | ${hours}:${min}${periods}`;
+    }
+
+    curdate.innerHTML= getcurrentday() + " | "+ getcurrenttime();
+    
+</script>
+</body>
+</html>
